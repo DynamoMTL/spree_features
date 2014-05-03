@@ -1,16 +1,10 @@
 module Spree
   class FeatureImage < ActiveRecord::Base
-    belongs_to :feature, touch: true
-    #attr_accessible :content, :position, :feature_id
+    belongs_to :feature #, touch: true
 
-    # image_accessor :content do
-    #   copy_to(:standard) { |a| a.thumb('460x634') }
-    #   copy_to(:small)    { |a| a.thumb('300x300') }
-    # end
+    has_attached_file :image, :styles => { :small => "300x300>", :standard => "460x634>" }#, :default_url => "/images/:style/missing.png"
+    validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
-    # image_accessor :standard
-    # image_accessor :small
-
-    validates_presence_of :content, on: :create
+    #validates_presence_of :content, on: :create
   end
 end

@@ -10,10 +10,8 @@ table.index.sortable data-hook="features_table" data-sortable-link=update_positi
     tr
       th
       th Name
-      / th Google Analytics Tag
       th Main Headline
       th Sub Headline
-      / th Link Label
       th Link
       th Image(s)
       th Position
@@ -26,19 +24,15 @@ table.index.sortable data-hook="features_table" data-sortable-link=update_positi
           span.handle
         td
           = feature.name
-        / td
-        /   = feature.ga_tag
         td
           = feature.headline1
         td
           = feature.headline2
-        / td
-        /   = feature.link_label
         td
           = feature.link
         td
-          - feature.feature_images.each do |image|
-            = image_tag image.small.remote_url, width: 100 if image.try(:small)
+          - feature.feature_images.each do |feature_image|
+            = image_tag feature_image.image.url(:small), width: 100
         td
           = feature.position
         td

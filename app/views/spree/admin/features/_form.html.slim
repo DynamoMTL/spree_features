@@ -1,11 +1,11 @@
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @feature }
 = f.input :name
-/= f.input :ga_tag
 = f.input :headline1
 = f.input :headline2
-/ = f.input :link_label
 = f.input :link
 = f.input :active, :as => :boolean
 = f.input :position
-= f.input :feature_images, :as => :file, :input_html => {:multiple => true}
 
+= f.semantic_fields_for :feature_images do |feature_image|
+  - if feature_image.object.new_record?
+    = feature_image.input :image, as: :file

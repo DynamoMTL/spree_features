@@ -1,6 +1,6 @@
 h1 Editing Feature
 
-= semantic_form_for(:feature, :url => admin_feature_url(@feature), :html => { :multipart => true, :method => :put } ) do |f|
+= semantic_form_for(@feature, :url => admin_feature_url(@feature), :html => { :multipart => true, :method => :put } ) do |f|
   = render :partial => 'form', :locals => { :f => f }
   p
     = submit_tag Spree.t("update")
@@ -10,7 +10,8 @@ h1 Editing Feature
 #feature-images
   h2= "Existing Images" if @feature.feature_images
   ul.unstyled
-    - @feature.feature_images.each do |image|
-      li
-        = image_tag image.small.remote_url, height: 100
-        = link_to "(Delete)", delete_feature_image_admin_feature_url(@feature, image: image)
+    - @feature.feature_images.each do |feature_image|
+      - unless feature_image.new_record?
+        li
+          = image_tag feature_image.image.url(:small), height: 100
+          = link_to "(Delete)", delete_feature_image_admin_feature_url(@feature, image: feature_image)

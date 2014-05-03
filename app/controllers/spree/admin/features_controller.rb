@@ -2,6 +2,16 @@ module Spree
   module Admin
     class FeaturesController < ResourceController
 
+      def new
+        @feature = Feature.new
+        @feature.feature_images.build
+      end
+
+      def edit
+        @feature = Feature.find(params[:id])
+        @feature.feature_images.build
+      end
+
       def update_positions
         params[:positions].each do |id, index|
           Feature.where(:id => id).update_all(:position => index)
