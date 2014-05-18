@@ -1,43 +1,47 @@
-.toolbar
-  ul.actions
-    li
-      = button_link_to 'New Feature', spree.new_admin_feature_path, :icon => 'add'
-  br.clear/
-h1 Features
-h4 This is where you manage the homepage features and slideshoes.
-table.index.sortable data-hook="features_table" data-sortable-link=update_positions_admin_features_url 
-  thead
-    tr
-      th
-      th Name
-      th Main Headline
-      th Sub Headline
-      th Link
-      th Image(s)
-      th Position
-      th Active
-      th
-  tbody
-    - @features.each do |feature|
-      tr data-hook="features_row" id=spree_dom_id(feature) 
-        td
-          span.handle
-        td
-          = feature.name
-        td
-          = feature.headline1
-        td
-          = feature.headline2
-        td
-          = feature.link
-        td
-          - feature.feature_images.each do |feature_image|
-            = image_tag feature_image.image.url(:small), width: 100
-        td
-          = feature.position
-        td
-          = feature.active
-        td
-          = link_to Spree.t("actions.edit"), edit_admin_feature_url(feature)
-          = "&nbsp;".html_safe
-          = link_to Spree.t("actions.delete"), admin_feature_url(feature), :method => :delete, :confirm => 'Are you sure'
+- content_for :page_title do
+  = Spree.t(:features)
+
+- content_for :page_actions do
+  li= button_link_to 'New Feature', spree.new_admin_feature_path, :icon => 'add'
+
+- if @features.any?
+  table.index.sortable data-hook="features_table" data-sortable-link=update_positions_admin_features_url 
+    thead
+      tr
+        th
+        th Name
+        th Main Headline
+        th Sub Headline
+        th Link
+        th Image(s)
+        th Position
+        th Active
+    tbody
+      - @features.each do |feature|
+        tr data-hook="features_row" id=spree_dom_id(feature) 
+          td
+            span.handle
+          td
+            = feature.name
+          td
+            = feature.headline1
+          td
+            = feature.headline2
+          td
+            = feature.link
+          td
+            = feature.feature_images.size
+            / - feature.feature_images.each do |feature_image|
+            /   = image_tag feature_image.image.url(:small), width: 100
+          td
+            = feature.position
+          td
+            = feature.active
+          td.actions
+            =link_to_edit feature, :no_text => true
+            =link_to_delete feature, :no_text => true   
+- else
+  .alpha.twelve.columns.no-objects-found
+    = Spree.t(:no_features_found)
+    br
+    = link_to Spree.t(:add_one), spree.new_admin_feature_path

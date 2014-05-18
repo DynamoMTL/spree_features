@@ -1,11 +1,38 @@
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @feature }
-= f.input :name
-= f.input :headline1
-= f.input :headline2
-= f.input :link
-= f.input :active, :as => :boolean
-= f.input :position
 
-= f.semantic_fields_for :feature_images do |feature_image|
-  - if feature_image.object.new_record?
-    = feature_image.input :image, as: :file
+div data-hook="admin_product_form_fields"  
+  div class="left eight columns alpha" data-hook="admin_product_form_left"    
+
+    = f.field_container :name do
+      = f.label :name, raw(Spree.t(:name) + content_tag(:span, ' *', :class => 'required'))
+      = f.text_field :name, :class => 'fullwidth'
+      = f.error_message_on :name
+
+    = f.field_container :headline1 do
+      = f.label :headline1, raw(Spree.t(:headline1) + content_tag(:span, ' *', :class => 'required'))
+      = f.text_field :headline1, :class => 'fullwidth'
+      = f.error_message_on :headline1
+
+    = f.field_container :headline2 do
+      = f.label :headline2, raw(Spree.t(:headline2) + content_tag(:span, ' *', :class => 'required'))
+      = f.text_field :headline2, :class => 'fullwidth'
+      = f.error_message_on :headline2
+
+    = f.field_container :link do
+      = f.label :link, raw(Spree.t(:link))
+      = f.text_field :link, :class => 'fullwidth'
+      = f.error_message_on :link
+
+    = f.field_container :active do
+      = f.label :active, raw(Spree.t(:active))
+      = f.check_box :active, :class => 'left'
+      = f.error_message_on :active
+
+    = f.field_container :position do
+      = f.label :position, raw(Spree.t(:position))
+      = f.number_field :position
+      = f.error_message_on :position
+
+    = f.fields_for :feature_images do |feature_image|
+      - if feature_image.object.new_record?
+        = feature_image.file_field :image
