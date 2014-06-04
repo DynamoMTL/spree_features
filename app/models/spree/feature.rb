@@ -8,6 +8,9 @@ module Spree
     
     accepts_nested_attributes_for :feature_images, :allow_destroy => true
 
+    default_scope { order(position: :asc) }
+    scope :active, -> { where(active: true) }
+
     # def feature_images=(images)
     #   images.each do |image|
     #     self.feature_images.build(:content => image)
@@ -17,6 +20,11 @@ module Spree
     def feature_image
       feature_images.first
     end
+
+    def feature_image_url
+      feature_images.first.image.url if feature_image
+    end
+
     def has_slideshow?
       feature_images.count > 1
     end

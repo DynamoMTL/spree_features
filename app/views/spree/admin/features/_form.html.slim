@@ -35,4 +35,5 @@ div data-hook="admin_product_form_fields"
 
     = f.fields_for :feature_images do |feature_image|
       - if feature_image.object.new_record?
+        = feature_image.label :image, raw(Spree.t(:image))
         = feature_image.file_field :image

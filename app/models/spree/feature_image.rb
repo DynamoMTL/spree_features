@@ -6,5 +6,8 @@ module Spree
     validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
 
     #validates_presence_of :content, on: :create
+
+    def standard
+    end
   end
 end
