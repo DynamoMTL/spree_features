@@ -18,6 +18,11 @@ div data-hook="admin_product_form_fields"
       = f.text_field :headline2, :class => 'fullwidth'
       = f.error_message_on :headline2
 
+    = f.field_container :subtitle do
+      = f.label :subtitle
+      = f.text_field :subtitle, :class => 'fullwidth'
+      = f.error_message_on :subtitle
+
     = f.field_container :link do
       = f.label :link, raw(Spree.t(:link))
       = f.text_field :link, :class => 'fullwidth'
